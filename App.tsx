@@ -11,11 +11,8 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import { ScrollView, RefreshControl, Text } from 'react-native';
-import SimpleList from './src/components/SimpleList';
-import FlatListExample from './src/components/FlatListExample';
-import SectionListExample from './src/components/SelectionListExample';
-
+import { LoginForm } from './src/components/SimpleButton';
+import { Text } from 'react-native';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -24,25 +21,61 @@ function App() {
     <SafeAreaProvider>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <AppContent />
+      <View style={styles.container}>
+    <View style={styles.card}>
+      <Text style={styles.title}>Welcome to RN Styling</Text>
+      <Text style={styles.subtitle}>Flexbox in action</Text>
+    </View>
+  </View>
     </SafeAreaProvider>
+    
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+  },
+  card: {
+    width: '80%',
+    padding: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+  },
+});
+
 function AppContent() {
   const safeAreaInsets = useSafeAreaInsets();
-return (
-    <ScrollView
-      contentContainerStyle={{
-        paddingTop: safeAreaInsets.top,
-        paddingBottom: safeAreaInsets.bottom,
-      }}
-    >
-      {/* <SimpleList /> */}
-      {/* <FlatListExample /> */}
-      <SectionListExample />
-    </ScrollView>
 
-  );
-};
+   return (
+    <LoginForm />
+    );
+}
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//   },
+// });
 
 export default App;
