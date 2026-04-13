@@ -11,6 +11,16 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import { LoginForm } from './src/components/LoginForm';
+import RootNavigation from './src/navigation/RootNavigation';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+const Tab = createMaterialTopTabNavigator({
+  screens: {
+    Login: LoginForm,
+    Lobby: RootNavigation,
+  },
+});
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -18,6 +28,10 @@ function App() {
   return (
     <SafeAreaProvider>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <Tab.Navigator>
+        <Tab.Screen name="Login" component={LoginForm} />
+        <Tab.Screen name="Lobby" component={RootNavigation} />
+      </Tab.Navigator>
       <AppContent />
     </SafeAreaProvider>
   );
@@ -27,11 +41,8 @@ function AppContent() {
   const safeAreaInsets = useSafeAreaInsets();
 
   return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
+    <View style={[styles.container, { paddingTop: safeAreaInsets.top }]}>
+      <RootNavigation />
     </View>
   );
 }
