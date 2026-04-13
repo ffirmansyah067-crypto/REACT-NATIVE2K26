@@ -5,10 +5,17 @@
  * @format
  */
 
-import { StatusBar,useColorScheme } from 'react-native';
-import { SafeAreaProvider} from 'react-native-safe-area-context';
-import  ProfilCard  from './src/components/ProfilCard';
-import  LoginForm from './src/components/FormLogin';
+import { NewAppScreen } from '@react-native/new-app-screen';
+import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+import { ScrollView, RefreshControl, Text } from 'react-native';
+import SimpleList from './src/components/SimpleList';
+import FlatListExample from './src/components/FlatListExample';
+import SectionListExample from './src/components/SelectionListExample';
+
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -16,11 +23,26 @@ function App() {
   return (
     <SafeAreaProvider>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ProfilCard />
-      <LoginForm />
+      <AppContent />
     </SafeAreaProvider>
-    
   );
 }
+
+function AppContent() {
+  const safeAreaInsets = useSafeAreaInsets();
+return (
+    <ScrollView
+      contentContainerStyle={{
+        paddingTop: safeAreaInsets.top,
+        paddingBottom: safeAreaInsets.bottom,
+      }}
+    >
+      {/* <SimpleList /> */}
+      {/* <FlatListExample /> */}
+      <SectionListExample />
+    </ScrollView>
+
+  );
+};
 
 export default App;
