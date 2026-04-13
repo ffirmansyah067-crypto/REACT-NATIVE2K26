@@ -11,8 +11,16 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import { LoginForm } from './src/components/SimpleButton';
-import { Text } from 'react-native';
+import { LoginForm } from './src/components/LoginForm';
+import RootNavigation from './src/navigation/RootNavigation';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+const Tab = createMaterialTopTabNavigator({
+  screens: {
+    Login: LoginForm,
+    Lobby: RootNavigation,
+  },
+});
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -20,62 +28,29 @@ function App() {
   return (
     <SafeAreaProvider>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <Tab.Navigator>
+        <Tab.Screen name="Login" component={LoginForm} />
+        <Tab.Screen name="Lobby" component={RootNavigation} />
+      </Tab.Navigator>
       <AppContent />
-      <View style={styles.container}>
-    <View style={styles.card}>
-      <Text style={styles.title}>Welcome to RN Styling</Text>
-      <Text style={styles.subtitle}>Flexbox in action</Text>
-    </View>
-  </View>
     </SafeAreaProvider>
-    
+  );
+}
+
+function AppContent() {
+  const safeAreaInsets = useSafeAreaInsets();
+
+  return (
+    <View style={[styles.container, { paddingTop: safeAreaInsets.top }]}>
+      <RootNavigation />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-  },
-  card: {
-    width: '80%',
-    padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
   },
 });
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-   return (
-    <LoginForm />
-    );
-}
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-// });
 
 export default App;
